@@ -3,6 +3,29 @@ import subprocess
 
 from file_utils import validate_filepath
 
+schema_run_python_file = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": "Runs a python file at the specified file path with the specified arguments using a subprocess and returns the result of the subprocess as a string.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path" : {
+                    "type": "string",
+                    "description": "File path of the python file to run, relative to the working directory",
+                },
+                "args": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Optional list of arguments to pass to the Python script",
+                },
+            },
+            "required": ["file_path"],
+        },
+    },
+}
+
 def run_python_file(working_directory: str, file_path: str, args: list[str] | None = None) -> str:
     try:
         success, message, target_path = validate_filepath(working_directory, file_path)
